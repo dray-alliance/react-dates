@@ -653,12 +653,20 @@
 }
 .DateInput {
   margin: 0;
-  padding: 0;
+  padding-left: 8px;
+  padding-right: 8px;
   background: #fff;
   position: relative;
-  display: inline-block;
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
   width: 130px;
-  vertical-align: middle
+  vertical-align: middle;
+  -webkit-flex: 1;
+  -ms-flex: 1 1 0%;
+  flex: 1
 }
 .DateInput__small {
   width: 97px
@@ -677,19 +685,15 @@
   color: #484848;
   background-color: #fff;
   width: 100%;
+  outline: 0;
   padding: 11px 11px 9px;
-  border: 0;
-  border-top: 0;
-  border-right: 0;
-  border-bottom: 2px solid transparent;
-  border-left: 0;
-  border-radius: 0
+  border: none
 }
 .DateInput_input__small {
   font-size: 15px;
   line-height: 18px;
   letter-spacing: .2px;
-  padding: 7px 7px 5px
+  padding: 0
 }
 .DateInput_input__regular {
   font-weight: auto
@@ -699,15 +703,6 @@
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none
-}
-.DateInput_input__focused {
-  outline: 0;
-  background: #fff;
-  border: 0;
-  border-top: 0;
-  border-right: 0;
-  border-bottom: 2px solid #008489;
-  border-left: 0
 }
 .DateInput_input__disabled {
   background: #f2f2f2;
@@ -738,8 +733,43 @@
   fill: transparent
 }
 .DateRangePickerInput {
+  -webkit-box-align: center;
+  -ms-flex-align: center;
   background-color: #fff;
-  display: inline-block
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-align-items: center;
+  align-items: center;
+  width: 288px;
+  height: 42px
+}
+.DateRangePickerInput__inputWrapper {
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  -webkit-box-direction: normal;
+  -webkit-box-orient: horizontal;
+  height: 100%;
+  padding: 0;
+  margin: 0;
+  -webkit-flex: 1;
+  -ms-flex: 1 1 0%;
+  flex: 1;
+  display: -webkit-inline-box;
+  display: -moz-inline-box;
+  display: -ms-inline-flexbox;
+  display: -webkit-inline-flex;
+  display: inline-flex;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -webkit-align-items: center;
+  align-items: center
+}
+.DateRatePickerInput__inputWrapperRight {
+  padding-left: 12px
 }
 .DateRangePickerInput__disabled {
   background: #f2f2f2
@@ -757,8 +787,14 @@
 .DateRangePickerInput__showClearDates {
   padding-right: 30px
 }
-.DateRangePickerInput_arrow {
+.DateRangePickerInput_divider {
   display: inline-block;
+  height: 50%;
+  width: 1px;
+  background-color: #000
+}
+.DateRangePickerInput_arrow {
+  display: none;
   vertical-align: middle;
   color: #484848
 }
@@ -815,8 +851,7 @@
   cursor: pointer;
   display: inline-block;
   vertical-align: middle;
-  padding: 10px;
-  margin: 0 5px 0 10px
+  padding: 12px 0 12px 12px
 }
 .DateRangePickerInput_calendarIcon_svg {
   fill: #82888a;
