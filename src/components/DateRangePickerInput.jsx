@@ -1,29 +1,29 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { forbidExtraProps, nonNegativeInteger } from 'airbnb-prop-types';
-import { css, withStyles, withStylesPropTypes } from 'react-with-styles';
+import React from "react";
+import PropTypes from "prop-types";
+import { forbidExtraProps, nonNegativeInteger } from "airbnb-prop-types";
+import { css, withStyles, withStylesPropTypes } from "react-with-styles";
 
-import { DateRangePickerInputPhrases } from '../defaultPhrases';
-import getPhrasePropTypes from '../utils/getPhrasePropTypes';
-import noflip from '../utils/noflip';
-import openDirectionShape from '../shapes/OpenDirectionShape';
+import { DateRangePickerInputPhrases } from "../defaultPhrases";
+import getPhrasePropTypes from "../utils/getPhrasePropTypes";
+import noflip from "../utils/noflip";
+import openDirectionShape from "../shapes/OpenDirectionShape";
 
-import DateInput from './DateInput';
-import IconPositionShape from '../shapes/IconPositionShape';
-import DisabledShape from '../shapes/DisabledShape';
+import DateInput from "./DateInput";
+import IconPositionShape from "../shapes/IconPositionShape";
+import DisabledShape from "../shapes/DisabledShape";
 
-import RightArrow from './RightArrow';
-import LeftArrow from './LeftArrow';
-import CloseButton from './CloseButton';
-import CalendarIcon from './CalendarIcon';
+import RightArrow from "./RightArrow";
+import LeftArrow from "./LeftArrow";
+import CloseButton from "./CloseButton";
+import CalendarIcon from "./CalendarIcon";
 
 import {
   START_DATE,
   END_DATE,
   ICON_BEFORE_POSITION,
   ICON_AFTER_POSITION,
-  OPEN_DOWN,
-} from '../constants';
+  OPEN_DOWN
+} from "../constants";
 
 const propTypes = forbidExtraProps({
   ...withStylesPropTypes,
@@ -77,18 +77,18 @@ const propTypes = forbidExtraProps({
   // i18n
   phrases: PropTypes.shape(getPhrasePropTypes(DateRangePickerInputPhrases)),
 
-  isRTL: PropTypes.bool,
+  isRTL: PropTypes.bool
 });
 
 const defaultProps = {
   children: null,
   startDateId: START_DATE,
   endDateId: END_DATE,
-  startDatePlaceholderText: 'Start Date',
-  endDatePlaceholderText: 'End Date',
+  startDatePlaceholderText: "Start Date",
+  endDatePlaceholderText: "End Date",
   startDateAriaLabel: undefined,
   endDateAriaLabel: undefined,
-  screenReaderMessage: '',
+  screenReaderMessage: "",
   onStartDateFocus() {},
   onEndDateFocus() {},
   onStartDateChange() {},
@@ -99,8 +99,8 @@ const defaultProps = {
   onKeyDownArrowDown() {},
   onKeyDownQuestionMark() {},
 
-  startDate: '',
-  endDate: '',
+  startDate: "",
+  endDate: "",
 
   isStartDateFocused: false,
   isEndDateFocused: false,
@@ -127,7 +127,7 @@ const defaultProps = {
   // i18n
   phrases: DateRangePickerInputPhrases,
 
-  isRTL: false,
+  isRTL: false
 };
 
 function DateRangePickerInput({
@@ -171,29 +171,32 @@ function DateRangePickerInput({
   verticalSpacing,
   small,
   regular,
-  styles,
+  styles
 }) {
   const calendarIcon = customInputIcon || (
     <CalendarIcon {...css(styles.DateRangePickerInput_calendarIcon_svg)} />
   );
 
-  let arrowIcon = customArrowIcon || <RightArrow {...css(styles.DateRangePickerInput_arrow_svg)} />;
-  if (isRTL) arrowIcon = <LeftArrow {...css(styles.DateRangePickerInput_arrow_svg)} />;
-  if (small) arrowIcon = '-';
+  let arrowIcon = customArrowIcon || (
+    <RightArrow {...css(styles.DateRangePickerInput_arrow_svg)} />
+  );
+  if (isRTL)
+    arrowIcon = <LeftArrow {...css(styles.DateRangePickerInput_arrow_svg)} />;
+  if (small) arrowIcon = "-";
 
   const closeIcon = customCloseIcon || (
     <CloseButton
       {...css(
         styles.DateRangePickerInput_clearDates_svg,
-        small && styles.DateRangePickerInput_clearDates_svg__small,
+        small && styles.DateRangePickerInput_clearDates_svg__small
       )}
     />
   );
 
-  const screenReaderStartDateText = screenReaderMessage
-    || phrases.keyboardForwardNavigationInstructions;
-  const screenReaderEndDateText = screenReaderMessage
-    || phrases.keyboardBackwardNavigationInstructions;
+  const screenReaderStartDateText =
+    screenReaderMessage || phrases.keyboardForwardNavigationInstructions;
+  const screenReaderEndDateText =
+    screenReaderMessage || phrases.keyboardBackwardNavigationInstructions;
 
   const inputIcon = (showDefaultInputIcon || customInputIcon !== null) && (
     <button
@@ -218,69 +221,76 @@ function DateRangePickerInput({
         isRTL && styles.DateRangePickerInput__rtl,
         !noBorder && styles.DateRangePickerInput__withBorder,
         block && styles.DateRangePickerInput__block,
-        showClearDates && styles.DateRangePickerInput__showClearDates,
+        showClearDates && styles.DateRangePickerInput__showClearDates
       )}
     >
-      {inputIconPosition === ICON_BEFORE_POSITION && inputIcon}
-
-      <DateInput
-        id={startDateId}
-        placeholder={startDatePlaceholderText}
-        ariaLabel={startDateAriaLabel}
-        displayValue={startDate}
-        screenReaderMessage={screenReaderStartDateText}
-        focused={isStartDateFocused}
-        isFocused={isFocused}
-        disabled={startDateDisabled}
-        required={required}
-        readOnly={readOnly}
-        showCaret={showCaret}
-        openDirection={openDirection}
-        onChange={onStartDateChange}
-        onFocus={onStartDateFocus}
-        onKeyDownShiftTab={onStartDateShiftTab}
-        onKeyDownArrowDown={onKeyDownArrowDown}
-        onKeyDownQuestionMark={onKeyDownQuestionMark}
-        verticalSpacing={verticalSpacing}
-        small={small}
-        regular={regular}
-      />
+      <div {...css(styles.DateRangePickerInput__inputWrapper)}>
+        {inputIconPosition === ICON_BEFORE_POSITION && inputIcon}
+        <DateInput
+          id={startDateId}
+          placeholder={startDatePlaceholderText}
+          ariaLabel={startDateAriaLabel}
+          displayValue={startDate}
+          screenReaderMessage={screenReaderStartDateText}
+          focused={isStartDateFocused}
+          isFocused={isFocused}
+          disabled={startDateDisabled}
+          required={required}
+          readOnly={readOnly}
+          showCaret={showCaret}
+          openDirection={openDirection}
+          onChange={onStartDateChange}
+          onFocus={onStartDateFocus}
+          onKeyDownShiftTab={onStartDateShiftTab}
+          onKeyDownArrowDown={onKeyDownArrowDown}
+          onKeyDownQuestionMark={onKeyDownQuestionMark}
+          verticalSpacing={verticalSpacing}
+          small={small}
+          regular={regular}
+        />
+      </div>
 
       {children}
 
-      {
-        <div
-          {...css(styles.DateRangePickerInput_arrow)}
-          aria-hidden="true"
-          role="presentation"
-        >
-          {arrowIcon}
-        </div>
-      }
+      <div {...css(styles.DateRangePickerInput_divider)} />
 
-      <DateInput
-        id={endDateId}
-        placeholder={endDatePlaceholderText}
-        ariaLabel={endDateAriaLabel}
-        displayValue={endDate}
-        screenReaderMessage={screenReaderEndDateText}
-        focused={isEndDateFocused}
-        isFocused={isFocused}
-        disabled={endDateDisabled}
-        required={required}
-        readOnly={readOnly}
-        showCaret={showCaret}
-        openDirection={openDirection}
-        onChange={onEndDateChange}
-        onFocus={onEndDateFocus}
-        onKeyDownArrowDown={onKeyDownArrowDown}
-        onKeyDownQuestionMark={onKeyDownQuestionMark}
-        onKeyDownTab={onEndDateTab}
-        verticalSpacing={verticalSpacing}
-        small={small}
-        regular={regular}
-      />
+      <div
+        {...css(styles.DateRangePickerInput_arrow)}
+        aria-hidden="true"
+        role="presentation"
+      >
+        {arrowIcon}
+      </div>
 
+      <div
+        {...css(
+          styles.DateRangePickerInput__inputWrapper,
+          styles.DateRatePickerInput__inputWrapperRight
+        )}
+      >
+        <DateInput
+          id={endDateId}
+          placeholder={endDatePlaceholderText}
+          ariaLabel={endDateAriaLabel}
+          displayValue={endDate}
+          screenReaderMessage={screenReaderEndDateText}
+          focused={isEndDateFocused}
+          isFocused={isFocused}
+          disabled={endDateDisabled}
+          required={required}
+          readOnly={readOnly}
+          showCaret={showCaret}
+          openDirection={openDirection}
+          onChange={onEndDateChange}
+          onFocus={onEndDateFocus}
+          onKeyDownArrowDown={onKeyDownArrowDown}
+          onKeyDownQuestionMark={onKeyDownQuestionMark}
+          onKeyDownTab={onEndDateTab}
+          verticalSpacing={verticalSpacing}
+          small={small}
+          regular={regular}
+        />
+      </div>
 
       {showClearDates && (
         <button
@@ -290,7 +300,8 @@ function DateRangePickerInput({
             styles.DateRangePickerInput_clearDates,
             small && styles.DateRangePickerInput_clearDates__small,
             !customCloseIcon && styles.DateRangePickerInput_clearDates_default,
-            !(startDate || endDate) && styles.DateRangePickerInput_clearDates__hide,
+            !(startDate || endDate) &&
+              styles.DateRangePickerInput_clearDates__hide
           )}
           onClick={onClearDates}
           disabled={disabled}
@@ -307,115 +318,141 @@ function DateRangePickerInput({
 DateRangePickerInput.propTypes = propTypes;
 DateRangePickerInput.defaultProps = defaultProps;
 
-export default withStyles(({ reactDates: { border, color, sizing } }) => ({
-  DateRangePickerInput: {
-    backgroundColor: color.background,
-    display: 'inline-block',
-  },
-
-  DateRangePickerInput__disabled: {
-    background: color.disabled,
-  },
-
-  DateRangePickerInput__withBorder: {
-    borderColor: color.border,
-    borderWidth: border.pickerInput.borderWidth,
-    borderStyle: border.pickerInput.borderStyle,
-    borderRadius: border.pickerInput.borderRadius,
-  },
-
-  DateRangePickerInput__rtl: {
-    direction: noflip('rtl'),
-  },
-
-  DateRangePickerInput__block: {
-    display: 'block',
-  },
-
-  DateRangePickerInput__showClearDates: {
-    paddingRight: 30, // TODO: should be noflip wrapped and handled by an isRTL prop
-  },
-
-  DateRangePickerInput_arrow: {
-    display: 'inline-block',
-    verticalAlign: 'middle',
-    color: color.text,
-  },
-
-  DateRangePickerInput_arrow_svg: {
-    verticalAlign: 'middle',
-    fill: color.text,
-    height: sizing.arrowWidth,
-    width: sizing.arrowWidth,
-  },
-
-  DateRangePickerInput_clearDates: {
-    background: 'none',
-    border: 0,
-    color: 'inherit',
-    font: 'inherit',
-    lineHeight: 'normal',
-    overflow: 'visible',
-
-    cursor: 'pointer',
-    padding: 10,
-    margin: '0 10px 0 5px', // TODO: should be noflip wrapped and handled by an isRTL prop
-    position: 'absolute',
-    right: 0, // TODO: should be noflip wrapped and handled by an isRTL prop
-    top: '50%',
-    transform: 'translateY(-50%)',
-  },
-
-  DateRangePickerInput_clearDates__small: {
-    padding: 6,
-  },
-
-  DateRangePickerInput_clearDates_default: {
-    ':focus': {
-      background: color.core.border,
-      borderRadius: '50%',
+export default withStyles(
+  ({ reactDates: { border, color, sizing } }) => ({
+    DateRangePickerInput: {
+      backgroundColor: color.background,
+      display: "flex",
+      alignItems: "center",
+      width: 288,
+      height: 42
     },
 
-    ':hover': {
-      background: color.core.border,
-      borderRadius: '50%',
+    DateRangePickerInput__inputWrapper: {
+      height: "100%",
+      padding: 0,
+      margin: 0,
+      flex: 1,
+      display: "inline-flex",
+      flexDirection: "row",
+      alignItems: "center"
     },
-  },
 
-  DateRangePickerInput_clearDates__hide: {
-    visibility: 'hidden',
-  },
+    DateRatePickerInput__inputWrapperRight: {
+      paddingLeft: 12
+    },
 
-  DateRangePickerInput_clearDates_svg: {
-    fill: color.core.grayLight,
-    height: 12,
-    width: 15,
-    verticalAlign: 'middle',
-  },
+    DateRangePickerInput__disabled: {
+      background: color.disabled
+    },
 
-  DateRangePickerInput_clearDates_svg__small: {
-    height: 9,
-  },
+    DateRangePickerInput__withBorder: {
+      borderColor: color.border,
+      borderWidth: border.pickerInput.borderWidth,
+      borderStyle: border.pickerInput.borderStyle,
+      borderRadius: border.pickerInput.borderRadius
+    },
 
-  DateRangePickerInput_calendarIcon: {
-    background: 'none',
-    border: 0,
-    color: 'inherit',
-    font: 'inherit',
-    lineHeight: 'normal',
-    overflow: 'visible',
+    DateRangePickerInput__rtl: {
+      direction: noflip("rtl")
+    },
 
-    cursor: 'pointer',
-    display: 'inline-block',
-    verticalAlign: 'middle',
-    padding: 10,
-    margin: '0 5px 0 10px', // TODO: should be noflip wrapped and handled by an isRTL prop
-  },
+    DateRangePickerInput__block: {
+      display: "block"
+    },
 
-  DateRangePickerInput_calendarIcon_svg: {
-    fill: color.core.grayLight,
-    height: 15,
-    width: 14,
-    verticalAlign: 'middle',
-  },
-}), { pureComponent: typeof React.PureComponent !== 'undefined' })(DateRangePickerInput);
+    DateRangePickerInput__showClearDates: {
+      paddingRight: 30 // TODO: should be noflip wrapped and handled by an isRTL prop
+    },
+
+    DateRangePickerInput_divider: {
+      display: "inline-block",
+      height: "50%",
+      width: 1,
+      backgroundColor: "black"
+    },
+
+    DateRangePickerInput_arrow: {
+      display: "none",
+      verticalAlign: "middle",
+      color: color.text
+    },
+
+    DateRangePickerInput_arrow_svg: {
+      verticalAlign: "middle",
+      fill: color.text,
+      height: sizing.arrowWidth,
+      width: sizing.arrowWidth
+    },
+
+    DateRangePickerInput_clearDates: {
+      background: "none",
+      border: 0,
+      color: "inherit",
+      font: "inherit",
+      lineHeight: "normal",
+      overflow: "visible",
+
+      cursor: "pointer",
+      padding: 10,
+      margin: "0 10px 0 5px", // TODO: should be noflip wrapped and handled by an isRTL prop
+      position: "absolute",
+      right: 0, // TODO: should be noflip wrapped and handled by an isRTL prop
+      top: "50%",
+      transform: "translateY(-50%)"
+    },
+
+    DateRangePickerInput_clearDates__small: {
+      padding: 6
+    },
+
+    DateRangePickerInput_clearDates_default: {
+      ":focus": {
+        background: color.core.border,
+        borderRadius: "50%"
+      },
+
+      ":hover": {
+        background: color.core.border,
+        borderRadius: "50%"
+      }
+    },
+
+    DateRangePickerInput_clearDates__hide: {
+      visibility: "hidden"
+    },
+
+    DateRangePickerInput_clearDates_svg: {
+      fill: color.core.grayLight,
+      height: 12,
+      width: 15,
+      verticalAlign: "middle"
+    },
+
+    DateRangePickerInput_clearDates_svg__small: {
+      height: 9
+    },
+
+    DateRangePickerInput_calendarIcon: {
+      background: "none",
+      border: 0,
+      color: "inherit",
+      font: "inherit",
+      lineHeight: "normal",
+      overflow: "visible",
+
+      cursor: "pointer",
+      display: "inline-block",
+      verticalAlign: "middle",
+      padding: "12px 0px 12px 12px"
+    },
+
+    DateRangePickerInput_calendarIcon_svg: {
+      fill: color.core.grayLight,
+      height: 15,
+      width: 14,
+      verticalAlign: "middle"
+    }
+  }),
+  { pureComponent: typeof React.PureComponent !== "undefined" }
+)(DateRangePickerInput);
