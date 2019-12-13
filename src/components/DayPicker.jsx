@@ -1373,7 +1373,8 @@ export default withStyles(
     },
 
     DayPicker_weekHeader: {
-      color: color.placeholderText,
+      color: "#5D5F62",
+      fontWeight: 600,
       position: "absolute",
       top: 62,
       zIndex: zIndex + 2,

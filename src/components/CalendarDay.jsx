@@ -224,8 +224,9 @@ export default withStyles(
     },
 
     CalendarDay__default: {
-      color: color.text,
+      color: color.grayDarker,
       background: color.background,
+      fontWeight: 500,
 
       ":hover": {
         background: color.core.borderLight,

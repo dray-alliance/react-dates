@@ -1,33 +1,36 @@
 /* eslint react/no-array-index-key: 0 */
 
-import React from 'react';
-import PropTypes from 'prop-types';
-import momentPropTypes from 'react-moment-proptypes';
-import { forbidExtraProps, mutuallyExclusiveProps, nonNegativeInteger } from 'airbnb-prop-types';
-import { css, withStyles, withStylesPropTypes } from 'react-with-styles';
-import moment from 'moment';
+import React from "react";
+import PropTypes from "prop-types";
+import momentPropTypes from "react-moment-proptypes";
+import {
+  forbidExtraProps,
+  mutuallyExclusiveProps,
+  nonNegativeInteger
+} from "airbnb-prop-types";
+import { css, withStyles, withStylesPropTypes } from "react-with-styles";
+import moment from "moment";
 
-import { CalendarDayPhrases } from '../defaultPhrases';
-import getPhrasePropTypes from '../utils/getPhrasePropTypes';
+import { CalendarDayPhrases } from "../defaultPhrases";
+import getPhrasePropTypes from "../utils/getPhrasePropTypes";
 
-import CalendarWeek from './CalendarWeek';
-import CalendarDay from './CalendarDay';
+import CalendarWeek from "./CalendarWeek";
+import CalendarDay from "./CalendarDay";
 
-import calculateDimension from '../utils/calculateDimension';
-import getCalendarMonthWeeks from '../utils/getCalendarMonthWeeks';
-import isSameDay from '../utils/isSameDay';
-import toISODateString from '../utils/toISODateString';
+import calculateDimension from "../utils/calculateDimension";
+import getCalendarMonthWeeks from "../utils/getCalendarMonthWeeks";
+import isSameDay from "../utils/isSameDay";
+import toISODateString from "../utils/toISODateString";
 
-import ModifiersShape from '../shapes/ModifiersShape';
-import ScrollableOrientationShape from '../shapes/ScrollableOrientationShape';
-import DayOfWeekShape from '../shapes/DayOfWeekShape';
-
+import ModifiersShape from "../shapes/ModifiersShape";
+import ScrollableOrientationShape from "../shapes/ScrollableOrientationShape";
+import DayOfWeekShape from "../shapes/DayOfWeekShape";
 
 import {
   HORIZONTAL_ORIENTATION,
   VERTICAL_SCROLLABLE,
-  DAY_SIZE,
-} from '../constants';
+  DAY_SIZE
+} from "../constants";
 
 const propTypes = forbidExtraProps({
   ...withStylesPropTypes,
@@ -43,10 +46,18 @@ const propTypes = forbidExtraProps({
   onDayMouseLeave: PropTypes.func,
   onMonthSelect: PropTypes.func,
   onYearSelect: PropTypes.func,
-  renderMonthText: mutuallyExclusiveProps(PropTypes.func, 'renderMonthText', 'renderMonthElement'),
+  renderMonthText: mutuallyExclusiveProps(
+    PropTypes.func,
+    "renderMonthText",
+    "renderMonthElement"
+  ),
   renderCalendarDay: PropTypes.func,
   renderDayContents: PropTypes.func,
-  renderMonthElement: mutuallyExclusiveProps(PropTypes.func, 'renderMonthText', 'renderMonthElement'),
+  renderMonthElement: mutuallyExclusiveProps(
+    PropTypes.func,
+    "renderMonthText",
+    "renderMonthElement"
+  ),
   firstDayOfWeek: DayOfWeekShape,
   setMonthTitleHeight: PropTypes.func,
   verticalBorderSpacing: nonNegativeInteger,
@@ -57,7 +68,7 @@ const propTypes = forbidExtraProps({
   // i18n
   monthFormat: PropTypes.string,
   phrases: PropTypes.shape(getPhrasePropTypes(CalendarDayPhrases)),
-  dayAriaLabelFormat: PropTypes.string,
+  dayAriaLabelFormat: PropTypes.string
 });
 
 const defaultProps = {
@@ -74,7 +85,7 @@ const defaultProps = {
   onMonthSelect() {},
   onYearSelect() {},
   renderMonthText: null,
-  renderCalendarDay: (props) => (<CalendarDay {...props} />),
+  renderCalendarDay: props => <CalendarDay {...props} />,
   renderDayContents: null,
   renderMonthElement: null,
   firstDayOfWeek: null,
@@ -84,10 +95,10 @@ const defaultProps = {
   isFocused: false,
 
   // i18n
-  monthFormat: 'MMMM YYYY', // english locale
+  monthFormat: "MMMM YYYY", // english locale
   phrases: CalendarDayPhrases,
   dayAriaLabelFormat: undefined,
-  verticalBorderSpacing: undefined,
+  verticalBorderSpacing: undefined
 };
 
 class CalendarMonth extends React.PureComponent {
@@ -98,8 +109,10 @@ class CalendarMonth extends React.PureComponent {
       weeks: getCalendarMonthWeeks(
         props.month,
         props.enableOutsideDays,
-        props.firstDayOfWeek == null ? moment.localeData().firstDayOfWeek() : props.firstDayOfWeek,
-      ),
+        props.firstDayOfWeek == null
+          ? moment.localeData().firstDayOfWeek()
+          : props.firstDayOfWeek
+      )
     };
 
     this.setCaptionRef = this.setCaptionRef.bind(this);
@@ -115,19 +128,21 @@ class CalendarMonth extends React.PureComponent {
     const {
       month: prevMonth,
       enableOutsideDays: prevEnableOutsideDays,
-      firstDayOfWeek: prevFirstDayOfWeek,
+      firstDayOfWeek: prevFirstDayOfWeek
     } = this.props;
     if (
-      !month.isSame(prevMonth)
-      || enableOutsideDays !== prevEnableOutsideDays
-      || firstDayOfWeek !== prevFirstDayOfWeek
+      !month.isSame(prevMonth) ||
+      enableOutsideDays !== prevEnableOutsideDays ||
+      firstDayOfWeek !== prevFirstDayOfWeek
     ) {
       this.setState({
         weeks: getCalendarMonthWeeks(
           month,
           enableOutsideDays,
-          firstDayOfWeek == null ? moment.localeData().firstDayOfWeek() : firstDayOfWeek,
-        ),
+          firstDayOfWeek == null
+            ? moment.localeData().firstDayOfWeek()
+            : firstDayOfWeek
+        )
       });
     }
   }
@@ -141,7 +156,12 @@ class CalendarMonth extends React.PureComponent {
   setMonthTitleHeight() {
     const { setMonthTitleHeight } = this.props;
     if (setMonthTitleHeight) {
-      const captionHeight = calculateDimension(this.captionRef, 'height', true, true);
+      const captionHeight = calculateDimension(
+        this.captionRef,
+        "height",
+        true,
+        true
+      );
       setMonthTitleHeight(captionHeight);
     }
   }
@@ -173,27 +193,29 @@ class CalendarMonth extends React.PureComponent {
       renderMonthElement,
       renderMonthText,
       styles,
-      verticalBorderSpacing,
+      verticalBorderSpacing
     } = this.props;
 
     const { weeks } = this.state;
-    const monthTitle = renderMonthText ? renderMonthText(month) : month.format(monthFormat);
+    const monthTitle = renderMonthText
+      ? renderMonthText(month)
+      : month.format(monthFormat);
 
     const verticalScrollable = orientation === VERTICAL_SCROLLABLE;
 
     return (
       <div
-        {...css(
-          styles.CalendarMonth,
-          { padding: `0 ${horizontalMonthPadding}px` },
-        )}
+        {...css(styles.CalendarMonth, {
+          padding: `0 ${horizontalMonthPadding}px`
+        })}
         data-visible={isVisible}
       >
         <div
           ref={this.setCaptionRef}
           {...css(
             styles.CalendarMonth_caption,
-            verticalScrollable && styles.CalendarMonth_caption__verticalScrollable,
+            verticalScrollable &&
+              styles.CalendarMonth_caption__verticalScrollable
           )}
         >
           {renderMonthElement ? (
@@ -201,12 +223,10 @@ class CalendarMonth extends React.PureComponent {
               month,
               onMonthSelect,
               onYearSelect,
-              isVisible,
+              isVisible
             })
           ) : (
-            <strong>
-              {monthTitle}
-            </strong>
+            <strong>{monthTitle}</strong>
           )}
         </div>
 
@@ -214,28 +234,32 @@ class CalendarMonth extends React.PureComponent {
           {...css(
             !verticalBorderSpacing && styles.CalendarMonth_table,
             verticalBorderSpacing && styles.CalendarMonth_verticalSpacing,
-            verticalBorderSpacing && { borderSpacing: `0px ${verticalBorderSpacing}px` },
+            verticalBorderSpacing && {
+              borderSpacing: `0px ${verticalBorderSpacing}px`
+            }
           )}
           role="presentation"
         >
           <tbody>
             {weeks.map((week, i) => (
               <CalendarWeek key={i}>
-                {week.map((day, dayOfWeek) => renderCalendarDay({
-                  key: dayOfWeek,
-                  day,
-                  daySize,
-                  isOutsideDay: !day || day.month() !== month.month(),
-                  tabIndex: isVisible && isSameDay(day, focusedDate) ? 0 : -1,
-                  isFocused,
-                  onDayMouseEnter,
-                  onDayMouseLeave,
-                  onDayClick,
-                  renderDayContents,
-                  phrases,
-                  modifiers: modifiers[toISODateString(day)],
-                  ariaLabelFormat: dayAriaLabelFormat,
-                }))}
+                {week.map((day, dayOfWeek) =>
+                  renderCalendarDay({
+                    key: dayOfWeek,
+                    day,
+                    daySize,
+                    isOutsideDay: !day || day.month() !== month.month(),
+                    tabIndex: isVisible && isSameDay(day, focusedDate) ? 0 : -1,
+                    isFocused,
+                    onDayMouseEnter,
+                    onDayMouseLeave,
+                    onDayClick,
+                    renderDayContents,
+                    phrases,
+                    modifiers: modifiers[toISODateString(day)],
+                    ariaLabelFormat: dayAriaLabelFormat
+                  })
+                )}
               </CalendarWeek>
             ))}
           </tbody>
@@ -248,34 +272,37 @@ class CalendarMonth extends React.PureComponent {
 CalendarMonth.propTypes = propTypes;
 CalendarMonth.defaultProps = defaultProps;
 
-export default withStyles(({ reactDates: { color, font, spacing } }) => ({
-  CalendarMonth: {
-    background: color.background,
-    textAlign: 'center',
-    verticalAlign: 'top',
-    userSelect: 'none',
-  },
+export default withStyles(
+  ({ reactDates: { color, font, spacing } }) => ({
+    CalendarMonth: {
+      background: color.background,
+      textAlign: "center",
+      verticalAlign: "top",
+      userSelect: "none"
+    },
 
-  CalendarMonth_table: {
-    borderCollapse: 'collapse',
-    borderSpacing: 0,
-  },
+    CalendarMonth_table: {
+      borderCollapse: "collapse",
+      borderSpacing: 0
+    },
 
-  CalendarMonth_verticalSpacing: {
-    borderCollapse: 'separate',
-  },
+    CalendarMonth_verticalSpacing: {
+      borderCollapse: "separate"
+    },
 
-  CalendarMonth_caption: {
-    color: color.text,
-    fontSize: font.captionSize,
-    textAlign: 'center',
-    paddingTop: spacing.captionPaddingTop,
-    paddingBottom: spacing.captionPaddingBottom,
-    captionSide: 'initial',
-  },
+    CalendarMonth_caption: {
+      color: "#000000",
+      fontSize: font.captionSize,
+      textAlign: "center",
+      paddingTop: spacing.captionPaddingTop,
+      paddingBottom: spacing.captionPaddingBottom,
+      captionSide: "initial"
+    },
 
-  CalendarMonth_caption__verticalScrollable: {
-    paddingTop: 12,
-    paddingBottom: 7,
-  },
-}), { pureComponent: typeof React.PureComponent !== 'undefined' })(CalendarMonth);
+    CalendarMonth_caption__verticalScrollable: {
+      paddingTop: 12,
+      paddingBottom: 7
+    }
+  }),
+  { pureComponent: typeof React.PureComponent !== "undefined" }
+)(CalendarMonth);
