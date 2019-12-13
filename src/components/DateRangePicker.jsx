@@ -709,6 +709,7 @@ export default withStyles(
     DateRangePicker_picker: {
       zIndex: zIndex + 1,
       backgroundColor: color.background,
+      boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.1)",
       position: "absolute"
     },
 

@@ -56,11 +56,6 @@ const NEXT_TRANSITION = "next";
 const MONTH_SELECTION_TRANSITION = "month_selection";
 const YEAR_SELECTION_TRANSITION = "year_selection";
 
-/**
- * Hack to set one character day of week.
- */
-moment.updateLocale("en", { weekdaysMin: "S_M_T_W_T_F_S".split("_") });
-
 const propTypes = forbidExtraProps({
   ...withStylesPropTypes,
 
@@ -1010,7 +1005,7 @@ class DayPicker extends React.PureComponent {
         {...css(styles.DayPicker_weekHeader_li, { width: daySize })}
       >
         {renderWeekHeaderElement ? (
-          renderWeekHeaderElement(day)
+          renderWeekHeaderElement(day[0])
         ) : (
           <small>{day}</small>
         )}
