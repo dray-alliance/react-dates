@@ -1005,9 +1005,9 @@ class DayPicker extends React.PureComponent {
         {...css(styles.DayPicker_weekHeader_li, { width: daySize })}
       >
         {renderWeekHeaderElement ? (
-          renderWeekHeaderElement(day[0])
+          renderWeekHeaderElement(day)
         ) : (
-          <small>{day}</small>
+          <small>{day[0]}</small>
         )}
       </li>
     ));
